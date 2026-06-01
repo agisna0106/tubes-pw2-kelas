@@ -32,7 +32,15 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->branch?->branch_name ?? '-' }}</td>
                             <td>{{ $user->getRoleNames()->first() }}</td>
-                            <td></td>
+                            <td class="flex flex-auto">
+                                <a href="{{ route('users.edit', $user->id) }}" class="flex items-center justify-center h-20"><i class="fa-solid fa-pencil"></i></a>
+                                <form action="{{ route('users.destroy', $user->id) }}" method="post" class="delete-form">
+                                    @csrf
+                                    @method('delete')
+                                    <x-danger-button type="submit" class="bg-transparent hover:bg-transparent active:bg-transparent border-0 shadow-none p-0 flex items-center justify-center h-20"><i class="fa-solid fa-trash text-red-600 ml-1"></i></x-danger-button>
+                                    {{-- <x-danger-button type="submit">Delete</x-danger-button> --}}
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </x-slot>
