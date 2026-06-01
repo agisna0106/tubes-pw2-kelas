@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="mb-6">
-
+                <x-primary-button tag="a" href="{{ route('users.create') }}">Tambah Data User</x-primary-button>
             </div>
 
             <x-table>
@@ -30,7 +30,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->branch?->branch_name }}</td>
+                            <td>{{ $user->branch?->branch_name ?? '-' }}</td>
                             <td>{{ $user->getRoleNames()->first() }}</td>
                             <td></td>
                         </tr>

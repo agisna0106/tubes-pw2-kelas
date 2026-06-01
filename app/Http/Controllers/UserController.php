@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Branch;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -22,7 +26,13 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $branches = Branch::pluck('branch_name', 'id');
+        $roles = Role::all();
+
+        return view(
+            'users.create',
+            compact('branches', 'roles')
+        );
     }
 
     /**
@@ -30,7 +40,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validate = $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username',
+            'email' => 'required|string|email|lowercase|unique:users,email',
+            'password' => ['required', Rules\Password::defaults()],
+            'branch_id' => 'nullable|integer|exists:branches,id',
+            'role' => 'required'
+        ]);
+
+        $validate['password'] = Hash::make($validate['password']);
+
+        $role = $validate['role'];
+        unset($validate['role']);
+
+        // dd($validate);
+        $user = User::create($validate);
+        $user->assignRole($role);
+
+        return redirect()
+        ->route('users.index')
+        ->with('success', 'User berhasil ditambahkan');
     }
 
     /**
