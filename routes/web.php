@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/owner/dashboard', function() {
             return "Owner Dashboard";
         });
+        Route::resource('users', UserController::class);
     });
 
     Route::middleware(['role:owner|manager'])->group(function () {
