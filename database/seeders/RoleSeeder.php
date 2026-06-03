@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RoleSeeder extends Seeder
 {
@@ -13,10 +14,22 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::create(['name' => 'owner']);
-        Role::create(['name' => 'manager']);
-        Role::create(['name' => 'supervisor']);
-        Role::create(['name' => 'cashier']);
-        Role::create(['name' => 'warehouse']);
+        app()[PermissionRegistrar::class]
+        ->forgetCachedPermissions();
+
+        $roles = [
+            'owner',
+            'manager',
+            'supervisor',
+            'cashier',
+            'warehouse',
+        ];
+
+        foreach ($roles as $role) {
+            Role::firstOrCreate([
+                'name' => $role,
+                'guard_name' => 'web'
+            ]);
+        }
     }
 }
