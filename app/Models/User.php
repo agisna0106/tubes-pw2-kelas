@@ -37,4 +37,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Branch::class);
     }
+    public function managedBranch()
+    {
+        return $this->hasOne(Branch::class, 'manager_id');
+    }
 }
