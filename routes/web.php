@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\BranchController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,6 +51,9 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:owner|manager|supervisor|cashier'])->group(function () {
         // Kasir
     });
+    Route::middleware(['auth', 'role:owner'])->group(function () {
+    Route::resource('branches', BranchController::class);
+});
 });
 
 require __DIR__.'/auth.php';
