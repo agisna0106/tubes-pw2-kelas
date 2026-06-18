@@ -104,6 +104,22 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            
+            @role('owner|supervisor')
+            <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                {{ __('Kategori') }}
+            </x-nav-link>
+
+            <x-nav-link :href="route('products.index')" :active="request()->request()->routeIs('products.*')">
+                {{ __('Produk') }}
+            </x-nav-link>
+            @endrole
+
+            @role('owner|supervisor|warehouse')
+            <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.*')">
+                {{ __('Inventory') }}
+            </x-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->
