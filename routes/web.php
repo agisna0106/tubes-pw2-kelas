@@ -35,10 +35,10 @@ Route::middleware('auth')->group(function () {
     // Hak akses Inventori (Sesuai kesepakatan: Owner, Supervisor, Warehouse)
     Route::middleware(['role:owner|supervisor|warehouse'])->group(function () {
         Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
-        
+
         Route::get('/inventory/stock-in', [InventoryController::class, 'stockIn'])->name('inventory.stock-in');
         Route::post('/inventory/stock-in', [InventoryController::class, 'storeStockIn'])->name('inventory.store-in');
-        
+
         Route::get('/inventory/stock-out', [InventoryController::class, 'stockOut'])->name('inventory.stock-out');
         Route::post('/inventory/stock-out', [InventoryController::class, 'storeStockOut'])->name('inventory.store-out');
     });
@@ -52,8 +52,8 @@ Route::middleware('auth')->group(function () {
         // Kasir
     });
     Route::middleware(['auth', 'role:owner'])->group(function () {
-    Route::resource('branches', BranchController::class);
-});
+        Route::resource('branches', BranchController::class);
+    });
 });
 
 require __DIR__.'/auth.php';
