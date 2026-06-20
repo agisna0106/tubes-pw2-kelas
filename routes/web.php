@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\BranchReportController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::middleware(['auth', 'role:owner'])->group(function () {
         Route::resource('branches', BranchController::class);
+        Route::get('/reports/branches',[BranchReportController::class, 'index'])->name('reports.branches');
     });
 });
 
