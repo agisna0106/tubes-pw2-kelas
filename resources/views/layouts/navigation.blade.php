@@ -30,8 +30,12 @@
                             {{ __('Users') }}
                         </x-nav-link>
 
-                         <x-nav-link :href="route('branches.index')" :active="request()->routeIs('branches.*')">
+                        <x-nav-link :href="route('branches.index')" :active="request()->routeIs('branches.*')">
                             {{ __('Cabang') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('reports.branches')" :active="request()->routeIs('reports.branches')">
+                            {{ __('Laporan Cabang') }}
                         </x-nav-link>
                     </div>
                 @endrole
@@ -128,6 +132,14 @@
             @role('owner')
             <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                 {{ __('User') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('branches.index')" :active="request()->routeIs('branches.index')">
+                {{ __('Cabang') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('reports.branches')" :active="request()->routeIs('reports.branches')">
+                {{ __('Laporan Cabang') }}
             </x-responsive-nav-link>
             @endrole
 
