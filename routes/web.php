@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\BranchReportController;
+use App\Http\Controllers\InventoryReportController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,6 +43,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/inventory/stock-out', [InventoryController::class, 'stockOut'])->name('inventory.stock-out');
         Route::post('/inventory/stock-out', [InventoryController::class, 'storeStockOut'])->name('inventory.store-out');
+
+        Route::get('/reports/inventory',[InventoryReportController::class, 'index'])->name('reports.inventory');
+        Route::get('/reports/inventory/pdf',[InventoryReportController::class, 'pdf'])->name('reports.inventory.pdf');
     });
 
     // Sisanya biarkan kosong untuk anggota lain
