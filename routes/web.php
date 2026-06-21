@@ -8,7 +8,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\InventoryReportController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\BranchReportController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ReportController;
 
@@ -27,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['role:owner'])->group(function () {
         Route::get('owner/dashboard', [DashboardController::class, 'owner'])->name('owner.dashboard');
         Route::resource('users', UserController::class);
+        Route::resource('report.branches', BranchReportController::class);
     });
 
     // Hak akses Kategori dan Produk (Sesuai kesepakatan: Owner & Supervisor)
@@ -38,10 +41,10 @@ Route::middleware('auth')->group(function () {
     // Hak akses Inventori (Sesuai kesepakatan: Owner, Supervisor, Warehouse)
     Route::middleware(['role:owner|supervisor|warehouse'])->group(function () {
         Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
-        
+
         Route::get('/inventory/stock-in', [InventoryController::class, 'stockIn'])->name('inventory.stock-in');
         Route::post('/inventory/stock-in', [InventoryController::class, 'storeStockIn'])->name('inventory.store-in');
-        
+
         Route::get('/inventory/stock-out', [InventoryController::class, 'stockOut'])->name('inventory.stock-out');
         Route::post('/inventory/stock-out', [InventoryController::class, 'storeStockOut'])->name('inventory.store-out');
 
@@ -62,11 +65,30 @@ Route::middleware('auth')->group(function () {
     // Hak akses Laporan Stok (Sesuai kesepakatan: Owner, Manager, Warehouse)
     Route::middleware(['role:owner|manager|warehouse'])->group(function () {
         Route::get('/reports/stock', [ReportController::class, 'stock'])->name('reports.stock');
+        Route::get('/reports/inventory',[InventoryReportController::class, 'index'])->name('reports.inventory');
+        Route::get('/reports/inventory/pdf',[InventoryReportController::class, 'pdf'])->name('reports.inventory.pdf');
     });
 
     Route::middleware(['auth', 'role:owner'])->group(function () {
-    Route::resource('branches', BranchController::class);
-});
+        Route::resource('branches', BranchController::class);
+    });
+
+    Route::middleware(['auth', 'role:manager'])->group(function () {
+        Route::get('manager/dashboard', [DashboardController::class, 'manager'])->name('manager.dashboard');
+    });
+
+    Route::middleware(['auth', 'role:supervisor'])->group(function () {
+        Route::get('supervisor/dashboard', [DashboardController::class, 'supervisor'])->name('supervisor.dashboard');
+    });
+
+    Route::middleware(['auth', 'role:warehouse'])->group(function () {
+        Route::get('warehouse/dashboard', [DashboardController::class, 'warehouse'])->name('warehouse.dashboard');
+    });
+
+    Route::middleware(['auth', 'role:cashier'])->group(function () {
+        Route::get('cashier/dashboard', [DashboardController::class, 'cashier'])->name('cashier.dashboard');
+    });
+
 });
 
 require __DIR__.'/auth.php';

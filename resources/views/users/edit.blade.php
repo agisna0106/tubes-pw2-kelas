@@ -46,7 +46,7 @@
                                 <option
                                     value="{{ $branch->id }}"
                                     {{ old('branch_id', $user->branch_id) == $branch->id ? 'selected' : '' }}>
-                                    {{ $branch->branch_name }}
+                                    {{ $branch->name }}
                                 </option>
                             @endforeach
                         </x-select-input>

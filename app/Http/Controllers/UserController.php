@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $branches = Branch::pluck('branch_name', 'id');
+        $branches = Branch::orderBy('name')->get();
         $roles = Role::all();
 
         return view(

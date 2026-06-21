@@ -46,29 +46,29 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-6">
 
-            {{-- <x-stat-card
+            <x-stat-card
                 title="Today's Sales"
                 :value="'Rp '.number_format($todaySales,0,',','.')"
                 icon="fa-solid fa-money-bill-wave"
-                color="green"/> --}}
+                color="green"/>
 
-            {{-- <x-stat-card
+            <x-stat-card
                 title="Monthly Sales"
                 :value="'Rp '.number_format($monthlySales,0,',','.')"
                 icon="fa-solid fa-chart-line"
-                color="blue"/> --}}
+                color="blue"/>
 
-            {{-- <x-stat-card
+            <x-stat-card
                 title="Transactions"
                 :value="$transactionCount"
                 icon="fa-solid fa-receipt"
-                color="yellow"/> --}}
+                color="yellow"/>
 
-            {{-- <x-stat-card
+            <x-stat-card
                 title="Cashiers"
                 :value="$cashierCount"
                 icon="fa-solid fa-cash-register"
-                color="red"/> --}}
+                color="red"/>
 
         </div>
 
