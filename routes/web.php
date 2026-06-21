@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 
     // Hak akses Owner
     Route::middleware(['role:owner'])->group(function () {
+        Route::get('owner/dashboard', [DashboardController::class, 'owner'])->name('owner.dashboard');
         Route::resource('users', UserController::class);
     });
 
@@ -43,6 +44,9 @@ Route::middleware('auth')->group(function () {
         
         Route::get('/inventory/stock-out', [InventoryController::class, 'stockOut'])->name('inventory.stock-out');
         Route::post('/inventory/stock-out', [InventoryController::class, 'storeStockOut'])->name('inventory.store-out');
+
+        Route::get('/reports/inventory',[InventoryReportController::class, 'index'])->name('reports.inventory');
+        Route::get('/reports/inventory/pdf',[InventoryReportController::class, 'pdf'])->name('reports.inventory.pdf');
     });
 
     // Hak akses Transaksi Penjualan (Sesuai kesepakatan: Cashier)
