@@ -161,6 +161,22 @@
                 </div>
 
 
+                @hasanyrole('owner|manager')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('reports.transactions')" :active="request()->routeIs('reports.transactions')">
+                            {{ __('Laporan Transaksi') }}
+                        </x-nav-link>
+                    </div>
+                @endhasanyrole
+
+                @hasanyrole('owner|manager|warehouse')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('reports.stock')" :active="request()->routeIs('reports.stock')">
+                            {{ __('Laporan Stok') }}
+                        </x-nav-link>
+                    </div>
+                @endhasanyrole
+
                 {{-- <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
@@ -226,14 +242,6 @@
             <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                 {{ __('User') }}
             </x-responsive-nav-link>
-
-            <x-responsive-nav-link :href="route('branches.index')" :active="request()->routeIs('branches.index')">
-                {{ __('Cabang') }}
-            </x-responsive-nav-link>
-
-            <x-responsive-nav-link :href="route('reports.branches')" :active="request()->routeIs('reports.branches')">
-                {{ __('Laporan Cabang') }}
-            </x-responsive-nav-link>
             @endrole
 
             @role('owner|supervisor')
@@ -251,6 +259,24 @@
                 {{ __('Inventory') }}
             </x-responsive-nav-link>
             @endrole
+
+            @role('cashier')
+            <x-responsive-nav-link :href="route('sales.index')" :active="request()->routeIs('sales.*')">
+                {{ __('Penjualan') }}
+            </x-responsive-nav-link>
+            @endrole
+
+            @hasanyrole('owner|manager')
+            <x-responsive-nav-link :href="route('reports.transactions')" :active="request()->routeIs('reports.transactions')">
+                {{ __('Laporan Transaksi') }}
+            </x-responsive-nav-link>
+            @endhasanyrole
+
+            @hasanyrole('owner|manager|warehouse')
+            <x-responsive-nav-link :href="route('reports.stock')" :active="request()->routeIs('reports.stock')">
+                {{ __('Laporan Stok') }}
+            </x-responsive-nav-link>
+            @endhasanyrole
         </div>
 
         <!-- Responsive Settings Options -->

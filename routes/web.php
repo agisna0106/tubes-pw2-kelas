@@ -9,8 +9,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\BranchController;
-use App\Http\Controllers\BranchReportController;
-use App\Http\Controllers\InventoryReportController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,10 +38,10 @@ Route::middleware('auth')->group(function () {
     // Hak akses Inventori (Sesuai kesepakatan: Owner, Supervisor, Warehouse)
     Route::middleware(['role:owner|supervisor|warehouse'])->group(function () {
         Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
-
+        
         Route::get('/inventory/stock-in', [InventoryController::class, 'stockIn'])->name('inventory.stock-in');
         Route::post('/inventory/stock-in', [InventoryController::class, 'storeStockIn'])->name('inventory.store-in');
-
+        
         Route::get('/inventory/stock-out', [InventoryController::class, 'stockOut'])->name('inventory.stock-out');
         Route::post('/inventory/stock-out', [InventoryController::class, 'storeStockOut'])->name('inventory.store-out');
 
@@ -49,18 +49,24 @@ Route::middleware('auth')->group(function () {
         Route::get('/reports/inventory/pdf',[InventoryReportController::class, 'pdf'])->name('reports.inventory.pdf');
     });
 
-    // Sisanya biarkan kosong untuk anggota lain
-    Route::middleware(['role:owner|manager'])->group(function () {
-        // Laporan
+    // Hak akses Transaksi Penjualan (Sesuai kesepakatan: Cashier)
+    Route::middleware(['role:cashier'])->group(function () {
+        Route::resource('sales', SaleController::class)->only(['index', 'create', 'store', 'show']);
     });
 
-    Route::middleware(['role:owner|manager|supervisor|cashier'])->group(function () {
-        // Kasir
+    // Hak akses Laporan Transaksi (Sesuai kesepakatan: Owner & Manager)
+    Route::middleware(['role:owner|manager'])->group(function () {
+        Route::get('/reports/transactions', [ReportController::class, 'transactions'])->name('reports.transactions');
     });
+
+    // Hak akses Laporan Stok (Sesuai kesepakatan: Owner, Manager, Warehouse)
+    Route::middleware(['role:owner|manager|warehouse'])->group(function () {
+        Route::get('/reports/stock', [ReportController::class, 'stock'])->name('reports.stock');
+    });
+
     Route::middleware(['auth', 'role:owner'])->group(function () {
-        Route::resource('branches', BranchController::class);
-        Route::get('/reports/branches',[BranchReportController::class, 'index'])->name('reports.branches');
-    });
+    Route::resource('branches', BranchController::class);
+});
 });
 
 require __DIR__.'/auth.php';
