@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 
     // Hak akses Owner
     Route::middleware(['role:owner'])->group(function () {
+        Route::get('owner/dashboard', [DashboardController::class, 'owner'])->name('owner.dashboard');
         Route::resource('users', UserController::class);
     });
 
