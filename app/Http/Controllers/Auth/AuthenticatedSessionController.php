@@ -31,23 +31,23 @@ class AuthenticatedSessionController extends Controller
         $user = $request->user();
 
         if ($user->hasRole('owner')) {
-            return redirect()->intended(route('owner.dashboard', absolute: false));
+            return redirect()->intended(route('owner.dashboard'));
         }
 
         if ($user->hasRole('manager')) {
-            return redirect()->intended(route('manager.dashboard', absolute: false));
+            return redirect()->intended(route('manager.dashboard'));
         }
 
         if ($user->hasRole('supervisor')) {
-            return redirect()->intended(route('supervisor.dashboard', absolute: false));
+            return redirect()->intended(route('supervisor.dashboard'));
         }
 
         if ($user->hasRole('cashier')) {
-            return redirect()->intended(route('cashier.dashboard', absolute: false));
+            return redirect()->intended(route('cashier.dashboard'));
         }
 
         if ($user->hasRole('warehouse')) {
-            return redirect()->intended(route('warehouse.dashboard', absolute: false));
+            return redirect()->intended(route('warehouse.dashboard'));
         }
 
         return redirect('/');

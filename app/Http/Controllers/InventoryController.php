@@ -12,7 +12,7 @@ class InventoryController extends Controller
 {
     public function index()
     {
-        $movements = StockMovement::with(['product', 'user'])->latest()->get();
+        $movements = StockMovement::with(['product', 'user'])->latest()->paginate(10);
         return view('inventory.index', compact('movements'));
     }
 

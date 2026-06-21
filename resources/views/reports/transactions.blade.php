@@ -90,6 +90,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="mt-4">
+                        {{ $sales->links() }}
+                    </div>
                 </div>
             </div>
         </div>

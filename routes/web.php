@@ -23,13 +23,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
     // Hak akses Owner
     Route::middleware(['role:owner'])->group(function () {
-        Route::get('owner/dashboard', [DashboardController::class, 'owner'])->name('owner.dashboard');
+        Route::get('/owner/dashboard', [DashboardController::class, 'owner'])->name('owner.dashboard');
         Route::resource('users', UserController::class);
-        Route::resource('report.branches', BranchReportController::class);
+
+        Route::get('/reports/branches', [BranchReportController::class, 'index'])->name('reports.branches');
+        Route::get('/reports/branches/pdf', [BranchReportController::class, 'pdf'])->name('reports.branches.pdf');
     });
 
     // Hak akses Kategori dan Produk (Sesuai kesepakatan: Owner & Supervisor)
@@ -74,19 +74,19 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware(['auth', 'role:manager'])->group(function () {
-        Route::get('manager/dashboard', [DashboardController::class, 'manager'])->name('manager.dashboard');
+        Route::get('/manager/dashboard', [DashboardController::class, 'manager'])->name('manager.dashboard');
     });
 
     Route::middleware(['auth', 'role:supervisor'])->group(function () {
-        Route::get('supervisor/dashboard', [DashboardController::class, 'supervisor'])->name('supervisor.dashboard');
+        Route::get('/supervisor/dashboard', [DashboardController::class, 'supervisor'])->name('supervisor.dashboard');
     });
 
     Route::middleware(['auth', 'role:warehouse'])->group(function () {
-        Route::get('warehouse/dashboard', [DashboardController::class, 'warehouse'])->name('warehouse.dashboard');
+        Route::get('/warehouse/dashboard', [DashboardController::class, 'warehouse'])->name('warehouse.dashboard');
     });
 
     Route::middleware(['auth', 'role:cashier'])->group(function () {
-        Route::get('cashier/dashboard', [DashboardController::class, 'cashier'])->name('cashier.dashboard');
+        Route::get('/cashier/dashboard', [DashboardController::class, 'cashier'])->name('cashier.dashboard');
     });
 
 });
