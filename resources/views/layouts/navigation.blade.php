@@ -65,6 +65,10 @@
                         <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.*')">
                             {{ __('Inventori') }}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('reports.inventory')" :active="request()->routeIs('reports.inventory')">
+                            {{ __('Laporan Inventori') }}
+                        </x-nav-link>
                     </div>
                 @endhasanyrole
 
