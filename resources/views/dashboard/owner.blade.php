@@ -16,7 +16,8 @@
     </div>
 
     <div class="px-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
 
             <x-stat-card
                 title="Total Branch"
@@ -135,5 +136,6 @@
             </div>
 
         </div>
+
     </div>
 </x-app-layout>

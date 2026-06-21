@@ -59,6 +59,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="mt-4">
+                        {{ $movements->links() }}
+                    </div>
                 </div>
             </div>
         </div>

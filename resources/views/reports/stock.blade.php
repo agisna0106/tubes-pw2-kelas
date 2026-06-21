@@ -100,6 +100,7 @@
                             @endforelse
                         </tbody>
                     </table>
+
                 </div>
             </div>
 
@@ -143,6 +144,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="mt-4 flex justify-end">
+                        {{ $movements->links() }}
+                    </div>
                 </div>
             </div>
         </div>

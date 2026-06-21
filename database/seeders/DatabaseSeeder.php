@@ -7,6 +7,12 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
+use Database\Seeders\BranchSeeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\BranchManagerSeeder;
+use Database\Seeders\CategorySeeder;
+use Database\Seeders\ProductSeeder;
+
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -24,28 +30,15 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            RoleSeeder::class
+            RoleSeeder::class,
+            BranchSeeder::class,
+            UserSeeder::class,
+            BranchManagerSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            StockMovementSeeder::class,
+            SaleSeeder::class,
         ]);
-
-        $roles = [
-            'owner',
-            'manager',
-            'supervisor',
-            'cashier',
-            'warehouse',
-        ];
-
-        foreach ($roles as $role) {
-            $user = User::create([
-                'name' => ucfirst($role),
-                'username' => $role,
-                'email' => $role . '@gmail.com',
-                'password' => Hash::make('password'),
-                'is_active' => true,
-            ]);
-
-            $user->assignRole($role);
-        }
 
     }
 }

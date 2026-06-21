@@ -28,11 +28,20 @@ class ReportController extends Controller
             $query->whereDate('transaction_date', '<=', $endDate);
         }
 
-        $sales = $query->latest('transaction_date')->get();
+        // Ambil semua data untuk statistik
+        $allSales = (clone $query)->get();
 
-        $totalTransaction = $sales->count();
-        $totalRevenue = $sales->sum('total');
-        $totalItemsSold = $sales->sum(fn ($sale) => $sale->details->sum('qty'));
+        // Ambil data untuk tabel dengan pagination
+        $sales = $query
+            ->latest('transaction_date')
+            ->paginate(10)
+            ->withQueryString();
+
+        $totalTransaction = $allSales->count();
+        $totalRevenue = $allSales->sum('total');
+        $totalItemsSold = $allSales->sum(function ($sale) {
+            return $sale->details->sum('qty');
+        });
 
         return view('reports.transactions', compact(
             'sales',
@@ -53,7 +62,9 @@ class ReportController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
-        $products = Product::with('category')->orderBy('name')->get();
+        $products = Product::with('category')
+            ->orderBy('name')
+            ->get();
 
         $movementQuery = StockMovement::with(['product', 'user']);
 
@@ -65,11 +76,27 @@ class ReportController extends Controller
             $movementQuery->whereDate('created_at', '<=', $endDate);
         }
 
-        $movements = $movementQuery->latest()->get();
+        // Ambil semua data untuk statistik
+        $allMovements = (clone $movementQuery)->get();
 
-        $totalStockIn = $movements->where('type', 'IN')->sum('quantity');
-        $totalStockOut = $movements->where('type', 'OUT')->sum('quantity');
-        $lowStockProducts = $products->filter(fn ($product) => $product->stock <= $product->minimum_stock);
+        // Ambil data untuk tabel dengan pagination
+        $movements = $movementQuery
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        // Statistik
+        $totalStockIn = $allMovements
+            ->where('type', 'IN')
+            ->sum('quantity');
+
+        $totalStockOut = $allMovements
+            ->where('type', 'OUT')
+            ->sum('quantity');
+
+        $lowStockProducts = $products->filter(function ($product) {
+            return $product->stock <= $product->minimum_stock;
+        });
 
         return view('reports.stock', compact(
             'products',
