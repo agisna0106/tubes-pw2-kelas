@@ -33,9 +33,19 @@
                     <div>
 
                         @auth
+                        @php
+                        $dashboardRoute = match (true) {
+                                auth()->user()->hasRole('owner') => 'owner.dashboard',
+                                auth()->user()->hasRole('manager') => 'manager.dashboard',
+                                auth()->user()->hasRole('supervisor') => 'supervisor.dashboard',
+                                auth()->user()->hasRole('cashier') => 'cashier.dashboard',
+                                auth()->user()->hasRole('warehouse') => 'warehouse.dashboard',
+                                default => '/',
+                            };
+                        @endphp
 
                             <a
-                                href="{{ route('dashboard') }}"
+                                href="{{ $dashboardRoute === '/' ? url('/') : route($dashboardRoute) }}"
                                 class="px-4 py-2 bg-blue-600 text-white rounded">
 
                                 Dashboard

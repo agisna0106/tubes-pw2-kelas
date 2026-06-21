@@ -153,10 +153,23 @@ class SaleController extends Controller
     {
         $date = now()->format('Ymd');
 
+        $count = Sale::whereDate(
+            'transaction_date',
+            now()->toDateString()
+        )->count() + 1;
+
         do {
-            $count = Sale::whereDate('transaction_date', now()->toDateString())->count() + 1;
-            $invoiceNumber = 'INV-' . $date . '-' . str_pad((string) $count, 4, '0', STR_PAD_LEFT);
-        } while (Sale::where('invoice_number', $invoiceNumber)->exists());
+
+            $invoiceNumber = 'INV-' .
+                $date .
+                '-' .
+                str_pad($count, 4, '0', STR_PAD_LEFT);
+
+            $count++;
+
+        } while (
+            Sale::where('invoice_number', $invoiceNumber)->exists()
+        );
 
         return $invoiceNumber;
     }
