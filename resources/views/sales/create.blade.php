@@ -19,7 +19,7 @@
                     <form action="{{ route('sales.store') }}" method="POST" @submit="return submitForm($event)">
                         @csrf
 
-                        <div class="mb-6">
+                        <div class="mb-6 hidden">
                             <label for="branch_id" class="block font-medium text-sm text-gray-700">Cabang <span class="text-red-500">*</span></label>
                             <select id="branch_id" name="branch_id" required class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full md:w-1/2">
                                 <option value="" disabled {{ old('branch_id', auth()->user()->branch_id) ? '' : 'selected' }}>-- Pilih Cabang --</option>
@@ -31,8 +31,6 @@
                             </select>
                             @error('branch_id') <p class="text-sm text-red-600 mt-2">{{ $message }}</p> @enderror
                         </div>
-
-                        <hr class="my-6">
 
                         <h3 class="font-semibold text-gray-800 mb-3">Tambah Produk</h3>
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end mb-6">

@@ -39,16 +39,25 @@
 
                     </x-nav-link>
 
-                    <x-nav-link
+                    {{-- <x-nav-link
                         :href="route('reports.branches')"
                         :active="request()->routeIs('reports.branches')">
 
                         Branch Report
 
-                    </x-nav-link>
+                    </x-nav-link> --}}
 
                     @endrole
 
+                    @role('supervisor')
+                    <x-nav-link
+                        :href="route('supervisor.dashboard')"
+                        :active="request()->routeIs('supervisor.dashboard')">
+
+                        Dashboard
+
+                    </x-nav-link>
+                    @endrole
 
                     {{-- owner & supervisor --}}
                     @hasanyrole('owner|supervisor')
@@ -105,13 +114,13 @@
 
                     </x-nav-link>
 
-                    <x-nav-link
+                    {{-- <x-nav-link
                         :href="route('reports.inventory')"
                         :active="request()->routeIs('reports.inventory')">
 
                         Inventory Report
 
-                    </x-nav-link>
+                    </x-nav-link> --}}
 
                     @endhasanyrole
 
@@ -135,13 +144,6 @@
 
                     </x-nav-link>
 
-                    <x-nav-link
-                        :href="route('reports.transactions')"
-                        :active="request()->routeIs('reports.transactions')">
-
-                        Transaction Report
-
-                    </x-nav-link>
 
                     @endrole
 

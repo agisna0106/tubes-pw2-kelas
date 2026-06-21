@@ -1,17 +1,41 @@
 <x-app-layout>
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+        <h2 class="font-semibold text-xl">
+            Supervisor Dashboard
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("Welcome, Supervisor!") }}
-                </div>
-            </div>
+    <div class="py-6 mx-6">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+            <x-stat-card
+                title="Total Categories"
+                :value="$totalCategories"
+                icon="fa-solid fa-tags"
+                color="blue"/>
+
+            <x-stat-card
+                title="Total Products"
+                :value="$totalProducts"
+                icon="fa-solid fa-box"
+                color="green"/>
+
+            <x-stat-card
+                title="Current Stock"
+                :value="$currentStock"
+                icon="fa-solid fa-warehouse"
+                color="yellow"/>
+
+            <x-stat-card
+                title="Low Stock"
+                :value="$lowStockCount"
+                icon="fa-solid fa-triangle-exclamation"
+                color="red"/>
+
         </div>
+
     </div>
+
 </x-app-layout>

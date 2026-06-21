@@ -30,7 +30,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->branch?->branch_name ?? '-' }}</td>
+                            <td>{{ $user->branch?->name ?? '-' }}</td>
                             <td>{{ $user->getRoleNames()->first() }}</td>
                             <td class="flex flex-auto">
                                 <a href="{{ route('users.edit', $user->id) }}" class="flex items-center justify-center h-20"><i class="fa-solid fa-pencil"></i></a>
