@@ -10,67 +10,156 @@
                     </a>
                 </div>
 
-                @hasanyrole('owner|manager|supervisor|warehouse')
-                    <!-- Navigation Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                    </div>
-                @endhasanyrole
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
-                {{-- bisi navigation mau diapakii beberapa role --}}
-                {{-- @hasanyrole()
-                @endhasanyrole --}}
+                    {{-- role owner --}}
+                    @role('owner')
 
-                @role('owner')
-                    <!-- Users Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
-                            {{ __('Users') }}
-                        </x-nav-link>
+                    <x-nav-link
+                        :href="route('owner.dashboard')"
+                        :active="request()->routeIs('owner.dashboard')">
 
-                        <x-nav-link :href="route('branches.index')" :active="request()->routeIs('branches.*')">
-                            {{ __('Cabang') }}
-                        </x-nav-link>
+                        Dashboard
 
-                        <x-nav-link :href="route('reports.branches')" :active="request()->routeIs('reports.branches')">
-                            {{ __('Laporan Cabang') }}
-                        </x-nav-link>
-                    </div>
-                @endrole
+                    </x-nav-link>
 
-                @role('manager')
-                @endrole
+                    <x-nav-link
+                        :href="route('users.index')"
+                        :active="request()->routeIs('users.*')">
 
-                @hasanyrole('owner|supervisor')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        Users
 
-                        <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
-                            {{ __('Kategori') }}
-                        </x-nav-link>
+                    </x-nav-link>
 
-                        <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
-                            {{ __('Produk') }}
-                        </x-nav-link>
-                    </div>
-                @endhasanyrole
+                    <x-nav-link
+                        :href="route('branches.index')"
+                        :active="request()->routeIs('branches.*')">
 
-                @role('cashier')
-                @endrole
+                        Branches
 
-                @hasanyrole('owner|supervisor|warehouse')
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    </x-nav-link>
 
-                        <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.*')">
-                            {{ __('Inventori') }}
-                        </x-nav-link>
+                    <x-nav-link
+                        :href="route('reports.branches')"
+                        :active="request()->routeIs('reports.branches')">
 
-                        <x-nav-link :href="route('reports.inventory')" :active="request()->routeIs('reports.inventory')">
-                            {{ __('Laporan Inventori') }}
-                        </x-nav-link>
-                    </div>
-                @endhasanyrole
+                        Branch Report
+
+                    </x-nav-link>
+
+                    @endrole
+
+
+                    {{-- owner & supervisor --}}
+                    @hasanyrole('owner|supervisor')
+
+                    <x-nav-link
+                        :href="route('categories.index')"
+                        :active="request()->routeIs('categories.*')">
+
+                        Categories
+
+                    </x-nav-link>
+
+                    <x-nav-link
+                        :href="route('products.index')"
+                        :active="request()->routeIs('products.*')">
+
+                        Products
+
+                    </x-nav-link>
+
+                    @endhasanyrole
+
+
+                    {{-- cashier --}}
+                    @role('cashier')
+
+                    <x-nav-link
+                        :href="route('cashier.dashboard')"
+                        :active="request()->routeIs('cashier.dashboard')">
+
+                        Dashboard
+
+                    </x-nav-link>
+
+                    <x-nav-link
+                        :href="route('sales.index')"
+                        :active="request()->routeIs('sales.*')">
+
+                        Sales
+
+                    </x-nav-link>
+
+                    @endrole
+
+
+                    {{-- owner, supervisor & warehouse --}}
+                    @hasanyrole('owner|supervisor|warehouse')
+
+                    <x-nav-link
+                        :href="route('inventory.index')"
+                        :active="request()->routeIs('inventory.*')">
+
+                        Inventory
+
+                    </x-nav-link>
+
+                    <x-nav-link
+                        :href="route('reports.inventory')"
+                        :active="request()->routeIs('reports.inventory')">
+
+                        Inventory Report
+
+                    </x-nav-link>
+
+                    @endhasanyrole
+
+
+                    {{-- manager --}}
+                    @role('manager')
+
+                    <x-nav-link
+                        :href="route('manager.dashboard')"
+                        :active="request()->routeIs('manager.dashboard')">
+
+                        Dashboard
+
+                    </x-nav-link>
+
+                    <x-nav-link
+                        :href="route('reports.inventory')"
+                        :active="request()->routeIs('reports.inventory')">
+
+                        Inventory Report
+
+                    </x-nav-link>
+
+                    <x-nav-link
+                        :href="route('reports.transactions')"
+                        :active="request()->routeIs('reports.transactions')">
+
+                        Transaction Report
+
+                    </x-nav-link>
+
+                    @endrole
+
+
+                    {{-- warehouse --}}
+                    @role('warehouse')
+
+                    <x-nav-link
+                        :href="route('warehouse.dashboard')"
+                        :active="request()->routeIs('warehouse.dashboard')">
+
+                        Dashboard
+
+                    </x-nav-link>
+
+                    @endrole
+                </div>
+
 
                 {{-- <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

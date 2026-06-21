@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('city');
             $table->text('address');
             $table->string('phone_number');
+            $table->foreignId('manager_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }
